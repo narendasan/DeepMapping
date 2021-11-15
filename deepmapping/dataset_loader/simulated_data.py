@@ -3,7 +3,7 @@ import glob
 import numpy as np
 import torch
 from torch.utils.data import Dataset
-from open3d import read_point_cloud
+import open3d
 
 import utils
 
@@ -12,7 +12,7 @@ def find_valid_points(local_point_cloud):
     """
     find valid points in local point cloud
         invalid points have all zeros local coordinates
-    local_point_cloud: <BxNxk> 
+    local_point_cloud: <BxNxk>
     valid_points: <BxN> indices  of valid point (0/1)
     """
     eps = 1e-6
@@ -30,10 +30,10 @@ class SimulatedPointCloud(Dataset):
         file_list = glob.glob(os.path.join(self.root, '*pcd'))
         self.file_list = sorted(file_list)
 
-        self.pcds = [] # a list of open3d pcd objects 
+        self.pcds = [] # a list of open3d pcd objects
         point_clouds = [] #a list of tensor <Lx2>
         for file in self.file_list:
-            pcd = read_point_cloud(file)
+            pcd = open3d.io.read_point_cloud(file)
             self.pcds.append(pcd)
 
             current_point_cloud = np.asarray(pcd.points, dtype=np.float32)[:, 0:2]

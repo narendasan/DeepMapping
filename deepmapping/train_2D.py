@@ -28,10 +28,11 @@ parser.add_argument('-d','--data_dir',type=str,default='../data/2D/',help='datas
 parser.add_argument('-m','--model', type=str, default=None,help='pretrained model name')
 parser.add_argument('-i','--init', type=str, default=None,help='init pose')
 parser.add_argument('--log_interval',type=int,default=10,help='logging interval of saving results')
+parser.add_argument('-c','--ckpt_dir', type=str, default="results", help="Dir to store results")
 
 opt = parser.parse_args()
 
-checkpoint_dir = os.path.join('../results/2D',opt.name)
+checkpoint_dir = os.path.join(opt.ckpt_dir, '2D', opt.name)
 if not os.path.exists(checkpoint_dir):
     os.makedirs(checkpoint_dir)
 utils.save_opt(checkpoint_dir,opt)
@@ -73,7 +74,7 @@ for epoch in range(opt.n_epochs):
         optimizer.step()
 
         training_loss += loss.item()
-    
+
     training_loss_epoch = training_loss/len(loader)
 
     if (epoch+1) % opt.log_interval == 0:
@@ -92,7 +93,7 @@ for epoch in range(opt.n_epochs):
 
                 obs_global_est_np.append(model.obs_global_est.cpu().detach().numpy())
                 pose_est_np.append(model.pose_est.cpu().detach().numpy())
-            
+
             pose_est_np = np.concatenate(pose_est_np)
             if init_pose is not None:
                 pose_est_np = utils.cat_pose_2D(init_pose_np,pose_est_np)
