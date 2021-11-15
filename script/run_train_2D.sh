@@ -1,4 +1,15 @@
 #!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=12
+#SBATCH --gres=gpu:1
+#SBATCH --time=48:00:00
+#SBATCH --mem=64GB
+#SBATCH --job-name=deepmapping_training
+#SBATCH --mail-type=BEGIN,END
+#SBATCH --mail-user=narendasan@nyu.edu
+#SBATCH --output=deepmapping_training_%j.stdout
+
 
 ROOT=$(pwd)
 

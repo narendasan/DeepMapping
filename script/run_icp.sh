@@ -1,4 +1,13 @@
 #!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=12
+#SBATCH --time=1:00:00
+#SBATCH --mem=16GB
+#SBATCH --job-name=deepmapping_icp
+#SBATCH --mail-type=BEGIN,END
+#SBATCH --mail-user=narendasan@nyu.edu
+#SBATCH --output=deepmapping_icp_%j.stdout
 
 ROOT=$(pwd)
 
