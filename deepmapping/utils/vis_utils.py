@@ -4,7 +4,7 @@ import torch
 import numpy as np
 
 
-def plot_global_point_cloud(point_cloud, pose, valid_points, save_dir, **kwargs):
+def plot_global_point_cloud(point_cloud, pose, valid_points, save_dir, plot_pose=True, **kwargs):
     if torch.is_tensor(point_cloud):
         point_cloud = point_cloud.cpu().detach().numpy()
     if torch.is_tensor(pose):
@@ -27,7 +27,8 @@ def plot_global_point_cloud(point_cloud, pose, valid_points, save_dir, **kwargs)
         plt.plot(current_pc[:, 0], current_pc[:, 1], '.')
     ax = plt.gca()
     ax.set_ylim(ax.get_ylim()[::-1])
-    plt.plot(pose[:, 0], pose[:, 1], color='black')
+    if plot_pose:
+        plt.plot(pose[:, 0], pose[:, 1], color='black')
     plt.savefig(save_name)
     plt.close()
 
